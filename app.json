@@ -4,7 +4,7 @@
     "slug": "book-my-show",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/main-icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -19,12 +19,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/main-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.farhan1234.bookmyshow"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2fc9e99f-1ecb-4a64-aee2-b4a89d05cd8f"
+      }
     }
   }
 }
