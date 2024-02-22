@@ -3,18 +3,21 @@ import { View, TextInput,Image,Text, Button, KeyboardAvoidingView, StyleSheet, A
 import { auth } from '../firebase';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
 import bannerImage from '../assets/signup.jpg';
+import { useDispatch } from 'react-redux';
+import { setUser } from './../redux/userSlice';
 
 const SignUp = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
+  const dispatch = useDispatch();
   const handleSignUp = async () => {
     setIsLoading(true);
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password);
+      dispatch(setUser(response?.user?.email));
       navigation.navigate('movie-screen');
-      console.log(response);
+      
     } catch (error) {
       console.log(error);
     } finally {
@@ -83,13 +86,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 20, // Adjust as needed
+    marginVertical: 20, 
     marginBottom: 100
   },
   bannerImage: {
     width: '80%',
-    height: 150, // Adjust as needed
-    resizeMode: 'contain', // Adjust as needed
+    height: 150,
+    resizeMode: 'contain', 
   },
   
 });

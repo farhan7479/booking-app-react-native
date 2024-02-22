@@ -3,16 +3,21 @@ import { View, TextInput, Text, Image, TouchableOpacity, Button, KeyboardAvoidin
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import bannerImage from '../assets/login.png';
+import { useDispatch } from 'react-redux';
+import { setUser } from './../redux/userSlice';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleLogin = async () => {
     setIsLoading(true);
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
+      dispatch(setUser(response?.user?.email));
+    
       navigation.navigate('movie-screen');
     } catch (error) {
       console.log(error);
@@ -24,8 +29,9 @@ const Login = ({ navigation }) => {
   const navigateToSignUp = () => {
     navigation.navigate('SignUp');
   };
+
   const continueAsGuest = () => {
-    // Navigate to the main app screen or perform any other action for guest users
+    
     navigation.navigate('movie-screen');
   };
 
@@ -51,13 +57,13 @@ const Login = ({ navigation }) => {
           secureTextEntry
         />
         <Button title="Sign In" onPress={handleLogin} disabled={isLoading} />
+        {isLoading && <ActivityIndicator style={styles.loader} size="large" color="#0000ff" />}
         <TouchableOpacity onPress={continueAsGuest}>
           <Text style={styles.continueAsGuestText}>Continue as Guest</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={navigateToSignUp} disabled={isLoading}>
           <Text style={styles.signUpText}>Don't have an account? <Text style={styles.signUpLink}>Sign Up</Text></Text>
         </TouchableOpacity>
-        {isLoading && <ActivityIndicator style={styles.loader} size="large" color="#0000ff" />}
       </View>
     </KeyboardAvoidingView>
   );
@@ -67,11 +73,9 @@ const styles = StyleSheet.create({
   continueAsGuestText: {
     textAlign: 'center',
     marginTop: 15,
-    marginBottom : 15,
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight: 'bold',
     color: 'blue',
-    fontSize: 20, // Adjust the font size as needed
-    fontWeight: 'bold', // Make the text bold
   },
   container: {
     flex: 1,
@@ -81,13 +85,6 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     width: '80%',
-  },
-  title1: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-    color: 'blue',
   },
   title: {
     fontSize: 32,
@@ -118,16 +115,13 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   bannerContainer: {
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 20, // Adjust as needed
-    marginBottom: 100
+    marginVertical: 20,
   },
   bannerImage: {
     width: '80%',
-    height: 150, // Adjust as needed
-    resizeMode: 'contain', // Adjust as needed
+    height: 150,
+    resizeMode: 'contain',
   },
 });
 

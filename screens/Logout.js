@@ -1,27 +1,19 @@
 import React from 'react';
-import { useState ,useEffect} from 'react';
-import { View, Text, Button, StyleSheet ,TouchableOpacity} from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
 import { auth } from '../firebase';
-import { onAuthStateChanged } from 'firebase/auth';
-import bannerImage from '../assets/logout1.png';
+
+import { useSelector ,useDispatch} from 'react-redux';
+import { logoutUser ,selectUser} from './../redux/userSlice';
 
 const Logout = ({ navigation }) => {
 
-
-    const [user, setUser] = useState(null);
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-          setUser(user);
-          
-          console.log(user);
-        });
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
     
-        return unsubscribe; 
-      }, []);
     const handleLogout = async () => {
       try {
+        dispatch(logoutUser());
         await auth.signOut();
-        
         navigation.navigate('Login');
       } catch (error) {
         console.error('Error signing out:', error.message);
@@ -30,7 +22,7 @@ const Logout = ({ navigation }) => {
   
     return (
       <View style={styles.container}>
-      <Text style={styles.emailText}>Email: {user?.email || 'Guest'}</Text>
+      <Text style={styles.emailText}>Email: {user || 'Guest'}</Text>
       {user ? (
         <Button title="Logout" onPress={handleLogout} color="#007AFF" />
       ) : (
