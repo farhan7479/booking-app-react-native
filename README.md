@@ -17,7 +17,6 @@ The BookMyShow app is a cross-platform mobile application developed using React 
 - **Frontend:** React Native for cross-platform mobile app development.
 - **State Management:** Redux Toolkit for managing application state.
 - **Authentication:** Firebase Authentication for user authentication.
-- **Push Notifications:** Firebase Cloud Messaging for sending push notifications.
 
 ## Installation:
 1. Clone the repository: `git clone <repository-url>`
