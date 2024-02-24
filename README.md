@@ -28,7 +28,6 @@ The BookMyShow app is a cross-platform mobile application developed using React 
 - `/`: Contains the source code of the React Native application.
 - `redux/`: Contains Redux slice files for managing application state.
 - `screens/`: Contains screen components for different app screens.
-- `components/`: Contains reusable components used across screens.
 - `firebase/`: Stores Firebase configuration files.
 
 ## Usage:
